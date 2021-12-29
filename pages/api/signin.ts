@@ -4,7 +4,10 @@ import cookie from "cookie";
 import prisma from "../../lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function signin(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { email, password } = req.body;
   const user = await prisma.user.findUnique({
     where: {
@@ -33,9 +36,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         secure: process.env.NODE_ENV === "production",
       })
     );
+    res.status(200);
     res.json(user);
   } else {
     res.json({ error: "Email or Password is wrong" });
     res.status(401);
   }
-};
+}
