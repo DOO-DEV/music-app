@@ -1,4 +1,11 @@
-function fetcher(url: string, data = undefined) {
+interface Data {
+  email: string;
+  password: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+function fetcher(url: string, data: undefined | Data = undefined) {
   return fetch(`${window.location.origin}/api/${url}`, {
     method: data ? "POST" : "GET",
     headers: {

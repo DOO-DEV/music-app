@@ -1,25 +1,14 @@
-import { Box, Button, Input, Flex } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { FC, useState } from "react";
-import { useSWRConfig } from "swr";
-import { auth } from "../lib/mutations";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import { FC, ReactNode, useState } from "react";
 import NextImage from "next/image";
+import NextLink from "next/link";
 
-const AuthForm: FC<{ mode: "signin" | "signup" }> = ({ mode }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+interface Props {
+  mode: "signin" | "signup";
+  children: ReactNode;
+}
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    auth(mode, { email, password });
-    console.log(email, password);
-    setLoading(false);
-    router.push("/");
-  };
+const AuthForm: FC<Props> = ({ mode, children }) => {
   return (
     <Box height="100vh" width="100vw" bg="black" color="white">
       <Flex
@@ -31,31 +20,28 @@ const AuthForm: FC<{ mode: "signin" | "signup" }> = ({ mode }) => {
         <NextImage src="/logo.svg" width={120} height={60} />
       </Flex>
       <Flex justify="center" align="center" height="calc(100vh - 100px)">
-        <Box padding="50px" bg="gray.900" borderRadius="6px">
-          <form onSubmit={handleSubmit}>
-            <Input
-              type="email"
-              placeholder="email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input
-              type="password"
-              placeholder="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button
-              type="submit"
-              bg="green.500"
-              isLoading={loading}
-              sx={{
-                "&:hover": {
-                  bg: "green.400",
-                },
-              }}
+        <Box
+          padding="50px"
+          bg="gray.900"
+          borderRadius="6px"
+          width={{ base: "100%", md: "70%", lg: "50%" }}
+        >
+          {children}
+          <Flex align="center">
+            <Text marginRight={2}>
+              {mode !== "signin"
+                ? "Already have an account?"
+                : "Create new account"}
+            </Text>
+            <NextLink
+              href={`/${mode === "signin" ? "signup" : "signin"}`}
+              passHref
             >
-              {mode}
-            </Button>
-          </form>
+              <a style={{ textDecoration: "underline", color: "#5974ee" }}>
+                {mode === "signin" ? "Signup" : "Signin"}
+              </a>
+            </NextLink>
+          </Flex>
         </Box>
       </Flex>
     </Box>
