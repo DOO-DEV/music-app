@@ -10,7 +10,13 @@ interface Props {
 
 const AuthForm: FC<Props> = ({ mode, children }) => {
   return (
-    <Box height="100vh" width="100vw" bg="black" color="white">
+    <Box
+      height="100vh"
+      width="100vw"
+      bg="black"
+      color="white"
+      minHeight="500px"
+    >
       <Flex
         justify="center"
         align="center"
@@ -19,7 +25,7 @@ const AuthForm: FC<Props> = ({ mode, children }) => {
       >
         <NextImage src="/logo.svg" width={120} height={60} />
       </Flex>
-      <Flex justify="center" align="center" height="calc(100vh - 100px)">
+      <Flex justify="center" align="center" height="calc(100% - 100px)">
         <Box
           padding="50px"
           bg="gray.900"
