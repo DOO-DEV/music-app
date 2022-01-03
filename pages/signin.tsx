@@ -43,7 +43,7 @@ const Signin = () => {
 
   return (
     <AuthForm mode="signin">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <Box>
           <Input
             {...register("email", {
@@ -60,7 +60,6 @@ const Signin = () => {
           )}
           <InputGroup>
             <Input
-              autoComplete="none"
               type={showPassword ? "text" : "password"}
               {...register("password", {
                 required: true,
@@ -120,5 +119,18 @@ const Signin = () => {
 };
 
 Signin.authPage = true;
+
+export const getServerSideProps = ({ req }) => {
+  const token = req.cookies.TRAX_ACCESS_TOKEN;
+  if (token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return { props: {} };
+};
 
 export default Signin;
