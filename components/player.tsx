@@ -24,7 +24,7 @@ import { useStoreActions } from "easy-peasy";
 import { formatTime } from "../lib/formaters";
 
 const Player = ({ songs, activeSong }) => {
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
   const [index, setIndex] = useState(
     songs.findIndex((song) => song.id === activeSong.id)
   );
@@ -143,7 +143,7 @@ const Player = ({ songs, activeSong }) => {
             icon={<MdSkipPrevious />}
             onClick={prevSong}
           />
-          {playing ? (
+          {!playing ? (
             <IconButton
               aria-label="play"
               fontSize="40px"
