@@ -151,7 +151,7 @@ const Player = ({ songs, activeSong }) => {
               variant="link"
               color="white"
               icon={<MdOutlinePlayCircleFilled />}
-              onClick={() => setPlayState(false)}
+              onClick={() => setPlayState(true)}
             />
           ) : (
             <IconButton
@@ -161,7 +161,7 @@ const Player = ({ songs, activeSong }) => {
               variant="link"
               color="white"
               icon={<MdOutlinePauseCircleFilled />}
-              onClick={() => setPlayState(true)}
+              onClick={() => setPlayState(false)}
             />
           )}
 
