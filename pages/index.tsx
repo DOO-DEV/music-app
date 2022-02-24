@@ -1,10 +1,10 @@
-import prisma from "../lib/prisma";
-import { Box, Flex, Text, Image } from "@chakra-ui/react";
-import GradiantLayout from "../components/gradiantLayout";
-import { useMe } from "../lib/hooks";
+import prisma from '../lib/prisma'
+import { Box, Flex, Text, Image } from '@chakra-ui/react'
+import GradiantLayout from '../components/gradiantLayout'
+import { useMe } from '../lib/hooks'
 
 export default function Home({ artists }) {
-  const { user } = useMe();
+  const { user } = useMe()
   return (
     <GradiantLayout
       color="purple"
@@ -22,7 +22,7 @@ export default function Home({ artists }) {
           <Text fontSize="md">only visibale to you</Text>
         </Box>
         <Flex>
-          {artists.map((artist) => (
+          {artists.map(artist => (
             <Box paddingX="10px" key={artist.name} width="20%">
               <Box bg="gray.900" borderRadius="4px" padding="15px" width="100%">
                 <Image
@@ -39,13 +39,13 @@ export default function Home({ artists }) {
         </Flex>
       </Box>
     </GradiantLayout>
-  );
+  )
 }
 
 export const getServerSideProps = async () => {
-  const artists = await prisma.artist.findMany({});
+  const artists = await prisma.artist.findMany({})
 
   return {
-    props: { artists },
-  };
-};
+    props: { artists }
+  }
+}

@@ -6,21 +6,23 @@ import {
   Tbody,
   Td,
   Tr,
-  IconButton,
-} from "@chakra-ui/react";
-import { BsFillPlayFill } from "react-icons/bs";
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { useStoreActions } from "easy-peasy";
-import { formatDate, formatTime } from "../lib/formaters";
+  IconButton
+} from '@chakra-ui/react'
+import { BsFillPlayFill } from 'react-icons/bs'
+import { AiOutlineClockCircle } from 'react-icons/ai'
+import { useStoreActions, useStoreState } from 'easy-peasy'
+import { formatDate, formatTime } from '../lib/formaters'
 
 const SongTable = ({ songs }) => {
-  const playSongs = useStoreActions((store: any) => store.changeActiveSongs);
-  const setActiveSong = useStoreActions((store: any) => store.changeActiveSong);
-
+  const playSongs = useStoreActions((store: any) => store.changeActiveSongs)
+  const setActiveSong = useStoreActions((store: any) => store.changeActiveSong)
+  const setIsPlaying = useStoreActions((store: any) => store.setPlaying)
+  const isPlaying = useStoreState((store: any) => store.isPlaying)
   const handlePlay = (activeSong?) => {
-    setActiveSong(activeSong || songs[0]);
-    playSongs(songs);
-  };
+    setIsPlaying(true)
+    setActiveSong(activeSong || songs[0])
+    playSongs(songs)
+  }
 
   return (
     <Box bg="transparent" paddingX="50px" color="white">
@@ -52,10 +54,10 @@ const SongTable = ({ songs }) => {
                 onClick={() => handlePlay(song)}
                 key={song.id}
                 sx={{
-                  transition: "all 0.3",
-                  "&:hover": {
-                    bg: "rgba(255, 255, 255, 0.1)",
-                  },
+                  transition: 'all 0.3',
+                  '&:hover': {
+                    bg: 'rgba(255, 255, 255, 0.1)'
+                  }
                 }}
                 cursor="pointer"
               >
@@ -69,7 +71,7 @@ const SongTable = ({ songs }) => {
         </Table>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default SongTable;
+export default SongTable

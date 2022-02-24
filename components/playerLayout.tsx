@@ -1,11 +1,11 @@
-import { ReactNode } from "react";
-import { Box } from "@chakra-ui/layout";
-import Sidbar from "./sidebar";
-import PlayerBar from "./playerBar";
+import { ReactNode } from 'react'
+import { Box } from '@chakra-ui/layout'
+import Sidbar from './sidebar'
+import PlayerBar from './playerBar'
 
 type Props = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 const PlayerLayout = ({ children }: Props) => {
   return (
@@ -20,7 +20,7 @@ const PlayerLayout = ({ children }: Props) => {
         <PlayerBar />
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default PlayerLayout;
+export default PlayerLayout

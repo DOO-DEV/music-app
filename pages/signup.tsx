@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState } from 'react'
 import {
   Text,
   Box,
@@ -6,49 +6,49 @@ import {
   Button,
   InputGroup,
   InputRightElement,
-  IconButton,
-} from "@chakra-ui/react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useRouter } from "next/router";
-import { useForm, SubmitHandler } from "react-hook-form";
-import AuthForm from "../components/authForm";
-import { auth } from "../lib/mutations";
+  IconButton
+} from '@chakra-ui/react'
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
+import { useRouter } from 'next/router'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import AuthForm from '../components/authForm'
+import { auth } from '../lib/mutations'
 
 interface Inputs {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
+  firstName: string
+  lastName: string
+  email: string
+  password: string
 }
 
 const Signup = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
+    formState: { errors }
+  } = useForm<Inputs>()
+  const [loading, setLoading] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter()
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    setLoading(() => true);
+  const onSubmit: SubmitHandler<Inputs> = async data => {
+    setLoading(() => true)
 
-    const user = await auth("signup", { ...data });
-    setLoading(() => false);
-    router.replace("/");
-  };
+    const user = await auth('signup', { ...data })
+    setLoading(() => false)
+    router.replace('/')
+  }
 
   const changeVisibility = useCallback(() => {
-    setShowPassword((prev) => !prev);
-  }, []);
+    setShowPassword(prev => !prev)
+  }, [])
 
   return (
     <AuthForm mode="signup">
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <Box>
           <Input
-            {...register("firstName", { required: true })}
+            {...register('firstName', { required: true })}
             marginBottom={2}
             placeholder="Firstname"
           />
@@ -58,7 +58,7 @@ const Signup = () => {
             </Text>
           )}
           <Input
-            {...register("lastName", { required: true })}
+            {...register('lastName', { required: true })}
             marginBottom={2}
             placeholder="Lastname"
           />
@@ -68,9 +68,9 @@ const Signup = () => {
             </Text>
           )}
           <Input
-            {...register("email", {
+            {...register('email', {
               required: true,
-              pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+              pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i
             })}
             marginBottom={2}
             placeholder="Email"
@@ -83,12 +83,11 @@ const Signup = () => {
           <InputGroup>
             <Input
               autoComplete="none"
-              type={showPassword ? "text" : "password"}
-              {...register("password", {
+              type={showPassword ? 'text' : 'password'}
+              {...register('password', {
                 required: true,
                 minLength: 4,
-                pattern:
-                  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
+                pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm
               })}
               marginBottom={2}
               placeholder="Password"
@@ -130,12 +129,12 @@ const Signup = () => {
             bg="green.500"
             isLoading={loading}
             sx={{
-              "&:hover": {
-                bg: "green.400",
+              '&:hover': {
+                bg: 'green.400'
               },
-              "&:hover[disabled]": {
-                bg: "green.400",
-              },
+              '&:hover[disabled]': {
+                bg: 'green.400'
+              }
             }}
           >
             Signup
@@ -143,22 +142,22 @@ const Signup = () => {
         </Box>
       </form>
     </AuthForm>
-  );
-};
+  )
+}
 
-Signup.authPage = true;
+Signup.authPage = true
 
 export const getServerSideProps = ({ req }) => {
-  const token = req.cookies.TRAX_ACCESS_TOKEN;
+  const token = req.cookies.TRAX_ACCESS_TOKEN
   if (token) {
     return {
       redirect: {
         permanent: false,
-        destination: "/",
-      },
-    };
+        destination: '/'
+      }
+    }
   }
-  return { props: {} };
-};
+  return { props: {} }
+}
 
-export default Signup;
+export default Signup

@@ -4,15 +4,15 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    node: true,
+    node: true
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: 13,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   rules: {
     'react/react-in-jsx-scope': 'off',
@@ -25,8 +25,8 @@ module.exports = {
       'ignorePackages',
       {
         ts: 'never',
-        tsx: 'never',
-      },
+        tsx: 'never'
+      }
     ],
     'consistent-return': 'off',
     'arrow-body-style': 'off',
@@ -36,13 +36,9 @@ module.exports = {
       'error',
       {
         namedComponents: 'arrow-function',
-        unnamedComponents: 'arrow-function',
-      },
+        unnamedComponents: 'arrow-function'
+      }
     ],
-    'prettier/prettier': 'warn',
-  },
+    'prettier/prettier': 'warn'
+  }
 }
-
-
-
-

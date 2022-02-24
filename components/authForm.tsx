@@ -1,11 +1,11 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
-import { FC, ReactNode, useState } from "react";
-import NextImage from "next/image";
-import NextLink from "next/link";
+import { Box, Flex, Text } from '@chakra-ui/react'
+import { FC, ReactNode, useState } from 'react'
+import NextImage from 'next/image'
+import NextLink from 'next/link'
 
 interface Props {
-  mode: "signin" | "signup";
-  children: ReactNode;
+  mode: 'signin' | 'signup'
+  children: ReactNode
 }
 
 const AuthForm: FC<Props> = ({ mode, children }) => {
@@ -30,28 +30,28 @@ const AuthForm: FC<Props> = ({ mode, children }) => {
           padding="50px"
           bg="gray.900"
           borderRadius="6px"
-          width={{ base: "100%", md: "70%", lg: "50%" }}
+          width={{ base: '100%', md: '70%', lg: '50%' }}
         >
           {children}
           <Flex align="center">
             <Text marginRight={2}>
-              {mode !== "signin"
-                ? "Already have an account?"
-                : "Create new account"}
+              {mode !== 'signin'
+                ? 'Already have an account?'
+                : 'Create new account'}
             </Text>
             <NextLink
-              href={`/${mode === "signin" ? "signup" : "signin"}`}
+              href={`/${mode === 'signin' ? 'signup' : 'signin'}`}
               passHref
             >
-              <a style={{ textDecoration: "underline", color: "#5974ee" }}>
-                {mode === "signin" ? "Signup" : "Signin"}
+              <a style={{ textDecoration: 'underline', color: '#5974ee' }}>
+                {mode === 'signin' ? 'Signup' : 'Signin'}
               </a>
             </NextLink>
           </Flex>
         </Box>
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
-export default AuthForm;
+export default AuthForm
