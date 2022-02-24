@@ -8,110 +8,111 @@ import {
   RangeSliderThumb,
   Center,
   Flex,
-  Text,
-} from "@chakra-ui/react";
-import ReactHowler from "react-howler";
-import { useEffect, useState, useRef } from "react";
+  Text
+} from '@chakra-ui/react'
+import ReactHowler from 'react-howler'
+import { useEffect, useState, useRef } from 'react'
 import {
   MdShuffle,
   MdSkipPrevious,
   MdSkipNext,
   MdOutlinePlayCircleFilled,
   MdOutlinePauseCircleFilled,
-  MdOutlineRepeat,
-} from "react-icons/md";
-import { useStoreActions } from "easy-peasy";
-import { formatTime } from "../lib/formaters";
+  MdOutlineRepeat
+} from 'react-icons/md'
+import { useStoreActions, useStoreState } from 'easy-peasy'
+import { formatTime } from '../lib/formaters'
 
 const Player = ({ songs, activeSong }) => {
-  const [playing, setPlaying] = useState(true);
+  const playing = useStoreState((store: any) => store.isPlaying)
   const [index, setIndex] = useState(
-    songs.findIndex((song) => song.id === activeSong.id)
-  );
-  const [seek, setSeek] = useState(0.0);
-  const [isSeeking, setIsSeeking] = useState(false);
-  const [repeat, setRepeat] = useState(false);
-  const [shuffle, setShuffle] = useState(false);
-  const [duration, setDuration] = useState(0.0);
-  const soundRef = useRef(null);
+    songs.findIndex(song => song.id === activeSong.id)
+  )
+  const [seek, setSeek] = useState(0.0)
+  const [isSeeking, setIsSeeking] = useState(false)
+  const [repeat, setRepeat] = useState(false)
+  const [shuffle, setShuffle] = useState(false)
+  const [duration, setDuration] = useState(0.0)
+  const soundRef = useRef(null)
   const changeActiveSong = useStoreActions(
     (store: any) => store.changeActiveSong
-  );
-  const repeatRef = useRef(repeat);
+  )
+  const setPlaying = useStoreActions((store: any) => store.setPlaying)
+  const repeatRef = useRef(repeat)
 
   useEffect(() => {
-    let timerID;
+    let timerID
 
     if (playing && !isSeeking) {
       const f = () => {
-        setSeek(soundRef.current.seek());
-        timerID = requestAnimationFrame(f);
-      };
+        setSeek(soundRef.current.seek())
+        timerID = requestAnimationFrame(f)
+      }
 
-      timerID = requestAnimationFrame(f);
-      return () => cancelAnimationFrame(timerID);
+      timerID = requestAnimationFrame(f)
+      return () => cancelAnimationFrame(timerID)
     }
-    cancelAnimationFrame(timerID);
-  }, [playing, isSeeking]);
+    cancelAnimationFrame(timerID)
+  }, [playing, isSeeking])
 
   useEffect(() => {
-    changeActiveSong(songs[index]);
-  }, [index, changeActiveSong, songs]);
+    changeActiveSong(songs[index])
+  }, [index, changeActiveSong, songs])
 
   useEffect(() => {
-    repeatRef.current = repeat;
-  }, [repeat]);
+    repeatRef.current = repeat
+  }, [repeat])
 
   const setPlayState = (value: boolean) => {
-    setPlaying(value);
-  };
+    setPlaying(value)
+  }
 
   const onShuffle = () => {
-    setShuffle((shuffle) => !shuffle);
-  };
+    setShuffle(shuffle => !shuffle)
+  }
 
   const onRepeat = () => {
-    setRepeat((repeat) => !repeat);
-  };
+    setRepeat(repeat => !repeat)
+  }
 
   const prevSong = () => {
-    setIndex((index) => {
-      return index ? index - 1 : songs.lenght - 1;
-    });
-  };
+    setIndex(index => {
+      return index ? index - 1 : songs.lenght - 1
+    })
+  }
 
   const nextSong = () => {
-    setIndex((index) => {
+    setIndex(index => {
       if (shuffle) {
-        const next = Math.floor(Math.random() * songs.length);
+        const next = Math.floor(Math.random() * songs.length)
 
         if (next === index) {
-          return nextSong();
+          return nextSong()
         }
-        return next;
+        return next
       }
-      return songs.length - 1 === index ? 0 : index + 1;
-    });
-  };
+      return songs.length - 1 === index ? 0 : index + 1
+    })
+  }
 
   const onEnd = () => {
     if (repeatRef.current) {
-      setSeek(0);
-      soundRef.current.seek(0);
+      setSeek(0)
+      soundRef.current.seek(0)
     } else {
-      nextSong();
+      nextSong()
     }
-  };
+  }
 
   const onLoad = () => {
-    const songDuration = soundRef.current.duration();
-    setDuration(songDuration);
-  };
+    const songDuration = soundRef.current.duration()
+    setDuration(songDuration)
+  }
 
-  const onSeek = (e) => {
-    setSeek(parseFloat(e[0]));
-    soundRef.current.seek(e[0]);
-  };
+  const onSeek = e => {
+    setSeek(parseFloat(e[0]))
+    soundRef.current.seek(e[0])
+  }
 
   return (
     <Box>
@@ -132,7 +133,7 @@ const Player = ({ songs, activeSong }) => {
             outline="none"
             variant="link"
             icon={<MdShuffle />}
-            color={shuffle ? "white" : "gray.600"}
+            color={shuffle ? 'white' : 'gray.600'}
             onClick={onShuffle}
           />
           <IconButton
@@ -179,7 +180,7 @@ const Player = ({ songs, activeSong }) => {
             outline="none"
             variant="link"
             icon={<MdOutlineRepeat />}
-            color={repeat ? "white" : "gray.600"}
+            color={repeat ? 'white' : 'gray.600'}
             onClick={onRepeat}
           />
         </ButtonGroup>
@@ -191,7 +192,7 @@ const Player = ({ songs, activeSong }) => {
           </Box>
           <Box width="80%">
             <RangeSlider
-              aria-label={["min", "max"]}
+              aria-label={['min', 'max']}
               step={0.1}
               min={0}
               id="player-range"
@@ -213,7 +214,7 @@ const Player = ({ songs, activeSong }) => {
         </Flex>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default Player;
+export default Player

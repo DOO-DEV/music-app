@@ -1,19 +1,19 @@
-import { Box, Flex, Text, Image } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { Box, Flex, Text, Image } from '@chakra-ui/react'
+import { ReactNode } from 'react'
 
 interface Props {
-  color: string;
-  children: ReactNode;
-  image: string;
-  subtitle: string;
-  title: string;
-  description: string;
-  roundImage?: boolean;
+  color: string
+  children: ReactNode
+  image: string
+  subtitle: string
+  title: string
+  description: string
+  roundImage?: boolean
 }
 
 const GradiantLayout = (props: Props) => {
   const { color, children, image, subtitle, title, description, roundImage } =
-    props;
+    props
   return (
     <Box
       height="100%"
@@ -26,7 +26,7 @@ const GradiantLayout = (props: Props) => {
             boxSize="160px"
             boxShadow="2xl"
             src={image}
-            borderRadius={roundImage ? "100%" : "3px"}
+            borderRadius={roundImage ? '100%' : '3px'}
           />
         </Box>
         <Box padding="20px" lineHeight="40px" color="white">
@@ -39,7 +39,7 @@ const GradiantLayout = (props: Props) => {
       </Flex>
       <Box paddingY="50px">{children}</Box>
     </Box>
-  );
-};
+  )
+}
 
-export default GradiantLayout;
+export default GradiantLayout

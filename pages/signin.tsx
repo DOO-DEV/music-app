@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react'
 import {
   Text,
   Box,
@@ -6,49 +6,49 @@ import {
   Button,
   IconButton,
   InputGroup,
-  InputRightElement,
-} from "@chakra-ui/react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useRouter } from "next/router";
-import { useForm, SubmitHandler } from "react-hook-form";
-import AuthForm from "../components/authForm";
-import { auth } from "../lib/mutations";
+  InputRightElement
+} from '@chakra-ui/react'
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
+import { useRouter } from 'next/router'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import AuthForm from '../components/authForm'
+import { auth } from '../lib/mutations'
 
 interface Inputs {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 const Signin = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
+    formState: { errors }
+  } = useForm<Inputs>()
+  const [loading, setLoading] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter()
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    setLoading(() => true);
+  const onSubmit: SubmitHandler<Inputs> = async data => {
+    setLoading(() => true)
 
-    const user = await auth("signin", { ...data });
-    setLoading(() => false);
-    router.replace("/");
-  };
+    const user = await auth('signin', { ...data })
+    setLoading(() => false)
+    router.replace('/')
+  }
 
   const changeVisibility = useCallback(() => {
-    setShowPassword((prev) => !prev);
-  }, []);
+    setShowPassword(prev => !prev)
+  }, [])
 
   return (
     <AuthForm mode="signin">
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <Box>
           <Input
-            {...register("email", {
+            {...register('email', {
               required: true,
-              pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+              pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i
             })}
             marginBottom={2}
             placeholder="Email"
@@ -60,9 +60,9 @@ const Signin = () => {
           )}
           <InputGroup>
             <Input
-              type={showPassword ? "text" : "password"}
-              {...register("password", {
-                required: true,
+              type={showPassword ? 'text' : 'password'}
+              {...register('password', {
+                required: true
               })}
               marginBottom={2}
               placeholder="Password"
@@ -102,12 +102,12 @@ const Signin = () => {
             bg="green.500"
             isLoading={loading}
             sx={{
-              "&:hover": {
-                bg: "green.400",
+              '&:hover': {
+                bg: 'green.400'
               },
-              "&:hover[disabled]": {
-                bg: "green.400",
-              },
+              '&:hover[disabled]': {
+                bg: 'green.400'
+              }
             }}
           >
             Signin
@@ -115,22 +115,22 @@ const Signin = () => {
         </Box>
       </form>
     </AuthForm>
-  );
-};
+  )
+}
 
-Signin.authPage = true;
+Signin.authPage = true
 
 export const getServerSideProps = ({ req }) => {
-  const token = req.cookies.TRAX_ACCESS_TOKEN;
+  const token = req.cookies.TRAX_ACCESS_TOKEN
   if (token) {
     return {
       redirect: {
         permanent: false,
-        destination: "/",
-      },
-    };
+        destination: '/'
+      }
+    }
   }
-  return { props: {} };
-};
+  return { props: {} }
+}
 
-export default Signin;
+export default Signin

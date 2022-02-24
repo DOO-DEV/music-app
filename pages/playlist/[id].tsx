@@ -1,24 +1,24 @@
-import GradiantLayout from "../../components/gradiantLayout";
-import SongTable from "../../components/songsTable";
-import prisma from "../../lib/prisma";
-import { validateToken } from "../../lib/validateRoute";
+import GradiantLayout from '../../components/gradiantLayout'
+import SongTable from '../../components/songsTable'
+import prisma from '../../lib/prisma'
+import { validateToken } from '../../lib/validateRoute'
 
-const getBgColor = (id) => {
+const getBgColor = id => {
   const colors = [
-    "red",
-    "green",
-    "blue",
-    "gray",
-    "yellow",
-    "purple",
-    "teal",
-    "cyan",
-  ];
-  return colors[id - 1] || colors[Math.floor(Math.random() * colors.length)];
-};
+    'red',
+    'green',
+    'blue',
+    'gray',
+    'yellow',
+    'purple',
+    'teal',
+    'cyan'
+  ]
+  return colors[id - 1] || colors[Math.floor(Math.random() * colors.length)]
+}
 
 const Playlist = ({ playlist }) => {
-  const color = getBgColor(playlist.id);
+  const color = getBgColor(playlist.id)
   return (
     <GradiantLayout
       color={color}
@@ -29,25 +29,25 @@ const Playlist = ({ playlist }) => {
     >
       <SongTable songs={playlist.songs} />
     </GradiantLayout>
-  );
-};
+  )
+}
 
 export const getServerSideProps = async ({ query, req }) => {
-  let user;
+  let user
   try {
-    user = validateToken(req.cookies.TRAX_ACCESS_TOKEN);
+    user = validateToken(req.cookies.TRAX_ACCESS_TOKEN)
   } catch (error) {
     return {
       redirect: {
         permanent: false,
-        destination: "/signin",
-      },
-    };
+        destination: '/signin'
+      }
+    }
   }
   const [playlist] = await prisma.playlist.findMany({
     where: {
       id: +query.id,
-      userId: user.id,
+      userId: user.id
     },
     include: {
       songs: {
@@ -55,16 +55,16 @@ export const getServerSideProps = async ({ query, req }) => {
           artist: {
             select: {
               name: true,
-              id: true,
-            },
-          },
-        },
-      },
-    },
-  });
+              id: true
+            }
+          }
+        }
+      }
+    }
+  })
   return {
-    props: { playlist },
-  };
-};
+    props: { playlist }
+  }
+}
 
-export default Playlist;
+export default Playlist
