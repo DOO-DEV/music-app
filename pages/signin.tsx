@@ -6,7 +6,8 @@ import {
   Button,
   IconButton,
   InputGroup,
-  InputRightElement
+  InputRightElement,
+  useToast
 } from '@chakra-ui/react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import { useRouter } from 'next/router'
@@ -28,13 +29,24 @@ const Signin = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
+  const toast = useToast()
 
   const onSubmit: SubmitHandler<Inputs> = async data => {
-    setLoading(() => true)
-
-    const user = await auth('signin', { ...data })
-    setLoading(() => false)
-    router.replace('/')
+    try {
+      setLoading(true)
+      const user = await auth('signin', { ...data })
+      router.replace('/')
+    } catch (error) {
+      toast({
+        position: 'bottom',
+        title: 'Email or password is wrong.',
+        duration: 9000,
+        isClosable: true,
+        status: 'error'
+      })
+    } finally {
+      setLoading(false)
+    }
   }
 
   const changeVisibility = useCallback(() => {

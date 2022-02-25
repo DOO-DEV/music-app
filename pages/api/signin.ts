@@ -39,7 +39,7 @@ export default async function signin(
     res.status(200)
     res.json(user)
   } else {
-    res.json({ error: 'Email or Password is wrong' })
     res.status(401)
+    res.json({ error: 'Email or Password is wrong' })
   }
 }
