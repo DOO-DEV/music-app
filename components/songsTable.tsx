@@ -19,9 +19,10 @@ const SongTable = ({ songs }) => {
   const setIsPlaying = useStoreActions((store: any) => store.setPlaying)
   const isPlaying = useStoreState((store: any) => store.isPlaying)
   const handlePlay = (activeSong?) => {
-    setIsPlaying(true)
-    if (!isPlaying) setActiveSong(activeSong || songs[0])
+    if (activeSong) setActiveSong(activeSong)
+    if (!activeSong && !isPlaying) setActiveSong(songs[0])
     playSongs(songs)
+    setIsPlaying(true)
   }
 
   return (
